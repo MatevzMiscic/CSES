@@ -4,50 +4,23 @@
 using namespace std;
 using ll = long long;
 
-ll inf = 1e9;
 ll mod = 1e9 + 7;
 
-ll exp(ll a, ll b, ll mod){
-    if(b == 0) return 1;
-    ll c = exp((a * a) % mod, b / 2, mod);
-    if(b & 1) c = (c * a) % mod;
-    return c;
-}
-
-
 int main(){
-    ll n;
+    ll n, sum = 0;
     scanf("%lld", &n);
-    vector<ll> p;
-    vector<int> a;
-    vector<int> primes(1e6 + 1, inf);
-    for(int i = 2; i <= 1e6; ++i){
-        if(primes[i] == inf){
-            int count = 0;
-            while(n % i == 0){
-                n /= i;
-                count++;
-            }
-            if(count > 0){
-                p.push_back(i);
-                a.push_back(count);
-                //printf("%d, %d, %d\n", i, count, n);
-            }
-            for(int j = 2*i; j <= 1e6; j += i){
-                primes[j] = min(primes[j], i);
-            }
+    for(int j = 1; j < 1e6; ++j){
+        ll a = n/(j + 1) + 1, b = n/j;
+        ll p = b - a + 1, q = a + b;
+        if(p % 2 == 0){
+            p = p >> 1;
+        }else{
+            q = q >> 1;
         }
+        sum = (sum + j * (((p % mod)*(q % mod)) % mod)) % mod;
     }
-    if(n > 1){
-        p.push_back(n);
-        a.push_back(1);
+    for(int i = 1; i <= n/1e6; ++i){
+        sum = (sum + i*(n / i)) % mod;
     }
-
-    ll sum = 1;
-    for(int i = 0; i < p.size(); ++i){
-        //printf("%lld, %d\n", p[i], a[i]);
-        sum *= (exp(p[i], a[i] + 1, mod) - 1) / (p[i] - 1);
-    }
-
     printf("%lld", sum);
 }

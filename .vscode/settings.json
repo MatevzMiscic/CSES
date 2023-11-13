@@ -6,6 +6,8 @@
         "map": "cpp",
         "algorithm": "cpp",
         "vector": "cpp",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp"
     }
 }
