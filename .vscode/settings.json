@@ -2,12 +2,7 @@
     "files.associations": {
         "*tpl": "html",
         "tuple": "cpp",
-        "unordered_map": "cpp",
-        "map": "cpp",
-        "algorithm": "cpp",
-        "vector": "cpp",
         "iostream": "cpp",
-        "bitset": "cpp",
-        "chrono": "cpp"
+        "array": "cpp"
     }
 }

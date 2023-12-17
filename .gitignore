@@ -31,9 +31,9 @@
 *.out
 *.app
 
+# vscode
+.vscode
+
 # Images
 *.png
 *.jpg
-
-# vscode
-.vscode
