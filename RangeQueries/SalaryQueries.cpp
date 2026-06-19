@@ -32,26 +32,20 @@ struct BIT{
     }
 };
 
-unordered_map<int, int> compress(vector<int>& vals){
-    sort(vals.begin(), vals.end());
-    auto last = unique(vals.begin(), vals.end());
-    vals.erase(last, vals.end());
-    unordered_map<int, int> tocompressed;
-    for(int i = 0; i < vals.size(); ++i){
-        tocompressed[vals[i]] = i;
-    }
-    return tocompressed;
+vector<int> vals;
+
+int compress(int x){
+    return lower_bound(vals.begin(), vals.end(), x) - vals.begin();
 }
 
 int main(){
     int n, q, a, b;
     scanf("%d %d", &n, &q);
-    vector<int> vals(n);
     vector<int> arr(n);
     vector<array<int, 3>> queries(q);
     for(int i = 0; i < n; ++i){
         scanf("%d", &arr[i]);
-        vals[i] = arr[i];
+        vals.push_back(arr[i]);
     }
     for(int i = 0; i < q; ++i){
         char t;
@@ -64,22 +58,24 @@ int main(){
         }
         vals.push_back(b);
     }
-    vector<int> salary(n);
-    unordered_map<int, int> tocompressed = compress(vals);
+    sort(vals.begin(), vals.end());
+    auto last = unique(vals.begin(), vals.end());
+    vals.erase(last, vals.end());
     int M = vals.size();
+    vector<int> salary(n);
     //printf("%d values\n", M);
     BIT tree(M);
     for(int i = 0; i < n; ++i){
-        arr[i] = tocompressed[arr[i]];
+        arr[i] = compress(arr[i]);
         tree.add(arr[i], 1);
     }
     for(array<int, 3>& query : queries){
         if(query[0] == 0){
             tree.add(arr[query[1]], -1);
-            arr[query[1]] = tocompressed[query[2]];
+            arr[query[1]] = compress(query[2]);
             tree.add(arr[query[1]], 1);
         }else{
-            printf("%lld\n", tree.query(tocompressed[query[1]], tocompressed[query[2]]));
+            printf("%lld\n", tree.query(compress(query[1]), compress(query[2])));
         }
     }
 }
