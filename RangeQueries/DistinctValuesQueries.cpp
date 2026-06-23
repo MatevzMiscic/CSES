@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <tuple>
 #include <vector>
-#include <unordered_map>
+#include <map>
 
 using namespace std;
 using ll = long long;
@@ -34,7 +34,7 @@ int main(){
     scanf("%d %d", &n, &q);
     vector<int> arr(n + 1, 0);
     vector<int> prev(n + 1, 0);
-    unordered_map<int, int> map;
+    map<int, int> map;
     for(int i = 1; i <= n; ++i){
         scanf("%d", &arr[i]);
         if(map[arr[i]]) prev[i] = map[arr[i]];
